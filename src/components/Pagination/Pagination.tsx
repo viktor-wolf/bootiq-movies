@@ -1,4 +1,4 @@
-export default function Pagination() {
+const Pagination = () => {
   return (
     <ul className="pagination">
       <li className="pagination-item">
@@ -7,3 +7,5 @@ export default function Pagination() {
     </ul>
   )
 }
+
+export default Pagination;

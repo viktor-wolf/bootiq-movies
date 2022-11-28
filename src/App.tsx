@@ -6,7 +6,7 @@ import Search from './pages/Search';
 
 import Header from './components/Header/Header';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Header />

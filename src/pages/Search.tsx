@@ -1,11 +1,23 @@
-import Pagination from '../components/Pagination/Pagination'
+import { useState } from 'react';
 
-export default function Search() {
+import Pagination from '../components/Pagination/Pagination';
+
+const Search = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }
+
+  const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  }
+
   return (
     <>
       <h1>Find your movie</h1>
-      <form action="">
-        <input type="text" name="" id="" placeholder="Movie name" />
+      <form className="" onSubmit={onSearchSubmit}>
+        <input type="text" name="" id="" placeholder="Movie name" value={searchQuery} onChange={handleSearchQueryChange} />
         <button type="submit">LUPA-ICON</button>
       </form>
       <div className="results-container">
@@ -27,3 +39,5 @@ export default function Search() {
     </>
   )
 }
+
+export default Search;

@@ -1,5 +1,7 @@
-export default function Movie() {
+const Movie = () => {
   return (
     <div>Movie</div>
   )
 }
+
+export default Movie;
