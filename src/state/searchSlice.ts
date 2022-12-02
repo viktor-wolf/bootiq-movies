@@ -42,7 +42,7 @@ export const fetchMovies = createAsyncThunk<any, string, { state: RootState }>('
     return Promise.resolve();
   }
 
-  const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&s=${encodeURIComponent(searchQuery)}&page=${currentPage}`);
+  const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&s=${encodeURIComponent(searchQuery)}&type=movie&page=${currentPage}`);
   return response.json();
 });
 
@@ -92,6 +92,7 @@ export const searchSlice = createSlice({
         if (payload.totalResults) {
           state.totalPages = Math.ceil(payload.totalResults / parseInt(process.env.REACT_APP_RESULTS_PER_PAGE as string));
         }
+
         state.status = 'idle'
       })
   }
