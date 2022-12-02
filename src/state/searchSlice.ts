@@ -10,7 +10,7 @@ interface IAPIMovie {
   imdbID: string
 }
 
-interface IMovie {
+export interface IMovie {
   page: number,
   poster: string,
   title: string,

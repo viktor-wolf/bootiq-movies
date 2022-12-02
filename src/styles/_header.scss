@@ -1,0 +1,31 @@
+@use 'vars';
+
+.header {
+  position: sticky;
+  top: 0;
+  padding: 0 2rem;
+  background: vars.$c-bg-light;
+}
+
+.header-nav {
+  border-bottom: 1px solid vars.$c-faint;
+  padding: 1rem 0;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.nav-item {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.nav-item__link {
+  color: vars.$c-dark;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}

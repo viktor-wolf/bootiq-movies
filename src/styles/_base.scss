@@ -1,0 +1,10 @@
+@use 'vars';
+
+html {
+  font-size: 100%;
+  font-family: vars.$ff;
+}
+
+body {
+  margin: 0;
+}

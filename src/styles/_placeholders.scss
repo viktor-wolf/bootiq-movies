@@ -1,0 +1,27 @@
+@use 'vars';
+
+%button {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: vars.$c-bg-light;
+  border: 1px solid vars.$c-faint;
+  cursor: pointer;
+  transition: border-color 300ms;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    border-color: vars.$c-highlight;
+    transition: padding 0ms;
+  }
+}
+
+%button--active {
+  color: vars.$c-highlight;
+  font-weight: 700;
+  border: 2px solid vars.$c-highlight;
+}

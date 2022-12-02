@@ -1,0 +1,36 @@
+@use 'vars';
+@use 'placeholders';
+
+.search-form {
+  margin-bottom: 4rem;
+}
+
+.search-group {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+.search-input {
+  flex: 1 0 0px;
+  padding: 0 0.5rem;
+  border: 1px solid vars.$c-faint;
+  border-right-width: 0;
+  border-radius: 0;
+}
+
+.search-submit {
+  @extend %button;
+
+  height: 2.5rem;
+  flex: 0 0 2.5rem;
+  border-radius: 0;
+
+  &#{&}--active {
+    @extend %button--active;
+  }
+}

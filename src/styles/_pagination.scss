@@ -1,0 +1,34 @@
+@use 'vars';
+@use 'placeholders';
+
+.pagination {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.pagination-item {
+  margin: 0 0.25rem;
+  line-height: 1;
+}
+
+.pagination-item__button {
+  @extend %button;
+  
+  height: 1.5rem;
+  border-radius: 2px;
+
+  &#{&}--active {
+    @extend %button--active;
+  }
+}
+
+.pagination-ellipsis {
+  @extend .pagination-item;
+
+  padding-top: 0.25rem;
+  color: vars.$c-faint;
+}
