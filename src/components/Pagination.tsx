@@ -45,7 +45,7 @@ const Pagination = () => {
 
   if (currentPage >= 5) {
     links.push(
-      <li className="pagination-ellipsis" aria-hidden="true">···</li>
+      <li className="pagination-ellipsis" aria-hidden="true" key={keygen.next().value as number}>···</li>
     )
   }
 
@@ -70,7 +70,7 @@ const Pagination = () => {
 
   if (currentPage <= totalPages - 4) {
     links.push(
-      <li className="pagination-ellipsis" aria-hidden="true">···</li>
+      <li className="pagination-ellipsis" aria-hidden="true" key={keygen.next().value as number}>···</li>
     )
   }
 
