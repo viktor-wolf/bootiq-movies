@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import searchReducer  from './searchSlice';
+import moviesReducer from './moviesSlice';
+import favsReducer from './favsSlice';
 
 export const store = configureStore({
   reducer: {
-    search: searchReducer
+    movies: moviesReducer,
+    favs: favsReducer
   }
 });
 

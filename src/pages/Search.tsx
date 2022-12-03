@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { fetchMovies } from '../state/searchSlice';
+import { searchMovies } from '../state/moviesSlice';
 import { useAppDispatch } from '../state/store';
 
-import Pagination from '../components/Pagination';
+import SearchPagination from '../components/SearchPagination';
 import MovieList from '../components/SearchResults';
 
 const Search = () => {
@@ -18,7 +18,7 @@ const Search = () => {
 
   const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (searchQuery.length >= 3) dispatch(fetchMovies(searchQuery));
+    if (searchQuery.length >= 3) dispatch(searchMovies(searchQuery));
   }
 
   const handleSearchQueryInput = (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value);
@@ -45,7 +45,7 @@ const Search = () => {
         </div>
       </form>
       <MovieList />
-      <Pagination />
+      <SearchPagination />
     </>
   )
 }

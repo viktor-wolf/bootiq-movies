@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '../state/store';
-import { IMovie } from '../state/searchSlice';
+import { useAppDispatch, useAppSelector } from '../state/store';
+import { IMovie } from '../state/shared-types';
 
 const NoDataPlaceholder = () => (
   <div className="no-data-placeholder">
@@ -12,23 +12,25 @@ const NoDataPlaceholder = () => (
   </div>
 )
 
-const Movie = ({ data: m }: { data: IMovie }) => {
+const Movie = ({ data }: { data: IMovie }) => {
+  const dispatch = useAppDispatch();
+  
   return (
     <li className="movie">
       <div className="movie__image-box">
-        <Link to={`/movie/${m.imdbID}`}>
-          <img src={m.poster} alt={m.title} className="movie__image" />
+        <Link to={`/movie/${data.imdbID}`}>
+          <img src={data.Poster} alt={data.Title} className="movie__image" />
         </Link>
       </div>
       <div className="movie__info-box">
         <h2 className="movie__title">
-          <Link to={`/movie/${m.imdbID}`} className="movie__title-link">
-            {m.title}
+          <Link to={`/movie/${data.imdbID}`} className="movie__title-link">
+            {data.Title}
           </Link>
         </h2>
         <ul className="movie-metadata">
           <li className="movie-metadata-item">
-            {m.year}
+            {data.Year}
           </li>
         </ul>
       </div>
@@ -37,15 +39,14 @@ const Movie = ({ data: m }: { data: IMovie }) => {
 }
 
 const MovieList = () => {
-  const { results, currentPage } = useAppSelector(state => state.search);
-  const pageResults = results.filter(result => result.page === currentPage);
+  const { movies } = useAppSelector(state => state.movies);
   
-  if (!results.length) return <NoDataPlaceholder />;
+  if (!movies.length) return <NoDataPlaceholder />;
 
   return (
     <ul className="movie-list">
       {
-        pageResults.map((result, key) => <Movie data={result} key={key} />)
+        movies.map((movie, key) => <Movie data={movie} key={key} />)
       }
     </ul>
   );

@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../state/store';
-import { changeCurrentPage, fetchMovies } from '../state/searchSlice';
+import { changeCurrentPage, searchMovies } from '../state/moviesSlice';
 
 import PaginationItem from './PaginationItem';
 
@@ -8,9 +8,9 @@ function* generateSequence() {
   while (true) yield k++;
 }
 
-const Pagination = () => {
+const SearchPagination = () => {
   const dispatch = useAppDispatch();
-  const { currentPage, totalPages, lastSearchQuery } = useAppSelector(state => state.search);
+  const { currentPage, totalPages, lastSearchQuery } = useAppSelector(state => state.movies);
 
   if (totalPages <= 1) return null;
 
@@ -25,7 +25,7 @@ const Pagination = () => {
       disabled={currentPage === 1 ? true : false}
       clickHandler={() => {
         dispatch(changeCurrentPage(currentPage - 1));
-        dispatch(fetchMovies(lastSearchQuery));
+        dispatch(searchMovies(lastSearchQuery));
       }}/>
   )
 
@@ -37,7 +37,7 @@ const Pagination = () => {
         disabled={false}
         clickHandler={() => {
           dispatch(changeCurrentPage(1));
-          dispatch(fetchMovies(lastSearchQuery));
+          dispatch(searchMovies(lastSearchQuery));
         }}
       />
     )
@@ -61,7 +61,7 @@ const Pagination = () => {
         disabled={isActive}
         clickHandler={() => {
           dispatch(changeCurrentPage(i));
-          dispatch(fetchMovies(lastSearchQuery));
+          dispatch(searchMovies(lastSearchQuery));
         }}
         active={isActive}
       />
@@ -82,7 +82,7 @@ const Pagination = () => {
         disabled={false}
         clickHandler={() => {
           dispatch(changeCurrentPage(totalPages));
-          dispatch(fetchMovies(lastSearchQuery));
+          dispatch(searchMovies(lastSearchQuery));
         }}
       />
     )
@@ -95,7 +95,7 @@ const Pagination = () => {
       disabled={currentPage === totalPages ? true : false}
       clickHandler={() => {
         dispatch(changeCurrentPage(currentPage + 1));
-        dispatch(fetchMovies(lastSearchQuery));
+        dispatch(searchMovies(lastSearchQuery));
       }}/>
   )
   
@@ -106,4 +106,4 @@ const Pagination = () => {
   )
 }
 
-export default Pagination;
+export default SearchPagination;
