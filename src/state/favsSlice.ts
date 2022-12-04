@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
-import { IMovie } from './shared-types';
+import { IMovie } from './moviesSlice';
 
 export interface IFavsState {
   favs: IMovie[]

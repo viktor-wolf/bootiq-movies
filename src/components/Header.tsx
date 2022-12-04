@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -18,7 +18,12 @@ const Header = () => {
   )
 }
 
-const NavItem = ({ to, children }: {to: string, children?: React.ReactNode}) => {
+interface INavItemProps {
+  to: string,
+  children: React.ReactNode
+}
+
+const NavItem: FC<INavItemProps> = ({ to, children }) => {
   return (
     <li className="nav-item">
       <Link to={to} className="nav-item__link">{children}</Link>

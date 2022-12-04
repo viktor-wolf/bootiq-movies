@@ -1,22 +1,24 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../state/store';
-import { IMovie } from '../state/shared-types';
-import { toggleFav } from '../state/favsSlice';
+import { IMovie } from '../state/moviesSlice';
 
-const NoDataPlaceholder = () => (
-  <div className="no-data-placeholder">
-    <img src="/assets/no-data.svg" alt="No data" className="no-data-placeholder__image" />
-    <div>
-      No data
-    </div>
-  </div>
-)
+import FavToggle from './FavToggle';
+import NoDataPlaceholder from './NoDataPlaceholder';
 
-const Movie = ({ movie, variant }: { movie: IMovie, variant: 'search' | 'favs' }) => {
-  const dispatch = useAppDispatch();
-  const { favs } = useAppSelector(state => state.favs);
-  const isFav = favs.find(fav => fav.imdbID === movie.imdbID);
+interface IMovieListFCSharedProps {
+  variant: 'search' | 'favs'
+}
+
+interface IMovieFCProps extends IMovieListFCSharedProps{
+  movie: IMovie
+}
+
+interface IMovieListFCProps extends IMovieListFCSharedProps {
+  movies: IMovie[]
+}
+
+const Movie: FC<IMovieFCProps> = ({ movie, variant }) => {
   let favsVariant;
 
   if (variant === 'favs') favsVariant = true;
@@ -45,23 +47,19 @@ const Movie = ({ movie, variant }: { movie: IMovie, variant: 'search' | 'favs' }
         }
       </div>
       {
-        favsVariant && (
-          <div className="movie__fav-box">
-            <button 
-              className={`fav-toggle${ isFav ? ' fav-toggle--toggled' : ''}`}
-              onClick={() => dispatch(toggleFav(movie))}>
-                <svg className="fav-toggle__heart">
-                  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle">❤</text>
-                </svg>
-            </button>
-          </div>
+        (
+          favsVariant && (
+            <div className="movie__fav-box">
+              <FavToggle movie={movie} />
+            </div>
+          )
         )
       }
     </li>
   )
 }
 
-const MovieList = ({ movies, variant }: { movies: IMovie[], variant: 'search' | 'favs' }) => {
+const MovieList: FC<IMovieListFCProps> = ({ movies, variant }) => {
   if (!movies.length) return <NoDataPlaceholder />;
 
   return (

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
+import detailReducer from './detailSlice';
 import moviesReducer from './moviesSlice';
 import favsReducer from './favsSlice';
 import persistenceMiddleware from './middleware';
@@ -8,7 +9,8 @@ import persistenceMiddleware from './middleware';
 export const store = configureStore({
   reducer: {
     movies: moviesReducer,
-    favs: favsReducer
+    favs: favsReducer,
+    detail: detailReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(persistenceMiddleware.middleware)
 });

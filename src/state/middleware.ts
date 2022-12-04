@@ -1,7 +1,7 @@
-import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { createListenerMiddleware } from '@reduxjs/toolkit';
 
-import { toggleFav } from "./favsSlice";
-import { RootState } from "./store";
+import { toggleFav } from './favsSlice';
+import { RootState } from './store';
 
 const persistenceMiddleware = createListenerMiddleware();
 persistenceMiddleware.startListening({

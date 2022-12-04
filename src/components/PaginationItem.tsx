@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 interface IPaginationItemProps {
   disabled: boolean,
   clickHandler(): void,
@@ -5,7 +7,7 @@ interface IPaginationItemProps {
   active?: boolean
 }
 
-const PaginationItem = ({ disabled, clickHandler, text, active }: IPaginationItemProps) => {
+const PaginationItem: FC<IPaginationItemProps> = ({ disabled, clickHandler, text, active }) => {
   return(
     <li className={'pagination-item'}>
       <button

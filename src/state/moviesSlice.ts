@@ -1,7 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
-import { IMovie } from './shared-types';
+
+export interface IMovie {
+  Poster: string,
+  Title: string,
+  Type: string,
+  Year: string,
+  imdbID: string
+}
 
 interface IMoviesState {
   movies: IMovie[],
