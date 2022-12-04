@@ -30,17 +30,17 @@ export const fetchFavs = createAsyncThunk<any, void, { state: RootState }>('favs
 });
 
 export const toggleFav = createAsyncThunk<any, string, { state: RootState }>('favs/toggle-fav', async (toggledId, { getState }) => {
-  const { favs } = getState().favs;
+  let { favs } = getState().favs;
   const favIndex = favs.findIndex(fav => fav.imdbID === toggledId);
 
-  // TODO: Figure out how to return a favs array instead of those tuples
   if (favIndex > -1) {
-    return ['splice', favIndex];
+    return favs.filter(fav => fav.imdbID !== toggledId);
   } else {
     const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&i=${encodeURIComponent(toggledId)}&type=movie`);
     const data = await response.json();
     const movie: IMovie = (({ Poster, Title, Type, Year, imdbID }) => ({ Poster, Title, Type, Year, imdbID }))(data);
-    return ['push', movie];
+    favs = [...favs, movie];
+    return favs;
   }
 });
 
@@ -54,11 +54,7 @@ export const favsSlice = createSlice({
         state.favs = action.payload;
       })
       .addCase(toggleFav.fulfilled, (state, action) => {
-        if (action.payload[0] === 'splice') {
-          state.favs.splice(action.payload[1], 1);
-        } else {
-          state.favs.push(action.payload[1]);
-        }
+        state.favs = action.payload;
       })
   }
 });
