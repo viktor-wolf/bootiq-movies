@@ -16,6 +16,8 @@
 }
 
 .search-input {
+  position: relative;
+  z-index: 1;
   flex: 1 0 0px;
   padding: 0 0.5rem;
   border: 1px solid vars.$cFaint;
