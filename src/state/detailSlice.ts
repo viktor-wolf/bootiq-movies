@@ -3,12 +3,11 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { IMovie } from './moviesSlice';
 
-interface IFetchedMovieDetail {
+interface IDetailBase {
   Title: string,
   Poster: string,
   Actors: string,
   Awards: string,
-  BoxOffice: string,
   Country: string,
   DVD: string,
   Director: string,
@@ -23,48 +22,33 @@ interface IFetchedMovieDetail {
   Runtime: string,
   Type: string,
   Website: string,
-  Year: string,
+  Year: string
+}
+
+interface IDetailForeign extends IDetailBase {
+  BoxOffice: string,
   imdbID: string,
   imdbRating: string,
   imdbVotes: string,
   Response: string
 }
 
-export interface IMovieDetail {
-  Title: string,
-  Poster: string,
-  Actors: string,
-  Awards: string,
+export interface IDetailLocal extends IDetailBase {
   'Box Office': string,
-  Country: string,
-  DVD: string,
-  Director: string,
-  Genre: string,
-  Language: string,
-  Metascore: string,
-  Plot: string,
-  Production: string,
-  Rated: string,
-  Ratings: { Source: string, Value: string}[],
-  Released: string,
-  Runtime: string,
-  Type: string,
-  Website: string,
-  Year: string,
   'IMDB ID': string,
   'IMDB Rating': string,
   'IMDB Votes': string
 }
 
 interface IDetailState {
-  detail: IMovieDetail | null
+  detail: IDetailLocal | null
 }
 
 const initialState: IDetailState = {
   detail: null
 };
 
-const fetchedMovieDetailToMovieDetail = ({ BoxOffice, imdbID, imdbRating, imdbVotes, ...rest }: IFetchedMovieDetail) => {
+const detailForeignToDetailLocal = ({ BoxOffice, imdbID, imdbRating, imdbVotes, ...rest }: IDetailForeign) => {
   return { 
     'Box Office': BoxOffice, 
     'IMDB ID': imdbID,
@@ -74,7 +58,7 @@ const fetchedMovieDetailToMovieDetail = ({ BoxOffice, imdbID, imdbRating, imdbVo
   }
 }
 
-export const movieDetailToMovie = ({ Poster, Title, Type, Year, 'IMDB ID': imdbID }: IMovieDetail): IMovie => {
+export const detailLocalToMovie = ({ Poster, Title, Type, Year, 'IMDB ID': imdbID }: IDetailLocal): IMovie => {
   return {
     Poster,
     Title,
@@ -95,10 +79,10 @@ export const detailSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchDetail.fulfilled, (state, action: PayloadAction<IFetchedMovieDetail>) => {
+      .addCase(fetchDetail.fulfilled, (state, action: PayloadAction<IDetailForeign>) => {
         if (action.payload.Response === 'False') return;
 
-        state.detail = fetchedMovieDetailToMovieDetail(action.payload);
+        state.detail = detailForeignToDetailLocal(action.payload);
       });
   }
 });

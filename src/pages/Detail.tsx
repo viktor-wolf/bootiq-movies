@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../state/store';
-import { fetchDetail, movieDetailToMovie } from '../state/detailSlice';
+import { fetchDetail, detailLocalToMovie } from '../state/detailSlice';
 
 import NoDataPlaceholder from '../components/NoDataPlaceholder';
 import FavToggle from '../components/FavToggle';
@@ -22,7 +22,7 @@ const Detail = () => {
     <>
       <div className="detail-header">
         <h1 className="page-title page-title--detail">{detail.Title}</h1>
-        <FavToggle movie={movieDetailToMovie(detail)} />
+        <FavToggle movie={detailLocalToMovie(detail)} />
       </div>
     </>
   )
