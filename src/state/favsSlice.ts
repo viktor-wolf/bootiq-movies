@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
 import { IMovie } from './shared-types';
@@ -26,37 +26,31 @@ export const fetchFavs = createAsyncThunk<any, void, { state: RootState }>('favs
   });
 
   return await Promise.all(requests)
-    .then(responses => Promise.all(responses.map(res => res.json())));
-});
-
-export const toggleFav = createAsyncThunk<any, string, { state: RootState }>('favs/toggle-fav', async (toggledId, { getState }) => {
-  let { favs } = getState().favs;
-  const favIndex = favs.findIndex(fav => fav.imdbID === toggledId);
-
-  if (favIndex > -1) {
-    return favs.filter(fav => fav.imdbID !== toggledId);
-  } else {
-    const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&i=${encodeURIComponent(toggledId)}&type=movie`);
-    const data = await response.json();
-    const movie: IMovie = (({ Poster, Title, Type, Year, imdbID }) => ({ Poster, Title, Type, Year, imdbID }))(data);
-    favs = [...favs, movie];
-    return favs;
-  }
+    .then(responses => 
+      Promise.all(responses.map(res => res.json()))
+    );
 });
 
 export const favsSlice = createSlice({
   name: 'favs',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleFav: (state, action: PayloadAction<IMovie>) => {
+      const indexInFavs = state.favs.findIndex(fav => fav.imdbID === action.payload.imdbID);
+      if (indexInFavs > -1) {
+        state.favs.splice(indexInFavs, 1);
+      } else {
+        state.favs.push(action.payload);
+      }
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchFavs.fulfilled, (state, action) => {
         state.favs = action.payload;
-      })
-      .addCase(toggleFav.fulfilled, (state, action) => {
-        state.favs = action.payload;
-      })
+      });
   }
 });
 
+export const { toggleFav } = favsSlice.actions;
 export default favsSlice.reducer;

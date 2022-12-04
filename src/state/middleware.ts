@@ -5,7 +5,7 @@ import { RootState } from "./store";
 
 const persistenceMiddleware = createListenerMiddleware();
 persistenceMiddleware.startListening({
-  actionCreator: toggleFav.fulfilled,
+  actionCreator: toggleFav,
   effect: (action, listenerApi) => {
     const idStrings = (listenerApi.getState() as RootState)
       .favs

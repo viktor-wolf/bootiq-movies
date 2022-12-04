@@ -13,32 +13,33 @@ const NoDataPlaceholder = () => (
   </div>
 )
 
-const Movie = ({ data }: { data: IMovie }) => {
+const Movie = ({ data: movie }: { data: IMovie }) => {
   const dispatch = useAppDispatch();
   const { favs } = useAppSelector(state => state.favs);
-  const isFav = favs.find(fav => fav.imdbID === data.imdbID);
+  const isFav = favs.find(fav => fav.imdbID === movie.imdbID);
   
   return (
     <li className="movie">
       <div className="movie__image-box">
-        <Link to={`/movie/${data.imdbID}`}>
-          <img src={data.Poster} alt={data.Title} className="movie__image" />
+        <Link to={`/movie/${movie.imdbID}`}>
+          <img src={movie.Poster} alt={movie.Title} className="movie__image" />
         </Link>
       </div>
       <div className="movie__info-box">
         <h2 className="movie__title">
-          <Link to={`/movie/${data.imdbID}`} className="movie__title-link">
-            {data.Title}
+          <Link to={`/movie/${movie.imdbID}`} className="movie__title-link">
+            {movie.Title}
           </Link>
         </h2>
         <ul className="movie-metadata">
           <li className="movie-metadata-item">
-            {data.Year}
+            {movie.Year}
           </li>
         </ul>
       </div>
+      { /* TODO: Delete toggle */ }
       <div className="movie__fav-box">
-        <button onClick={() => dispatch(toggleFav(data.imdbID))}>
+        <button onClick={() => dispatch(toggleFav(movie))}>
           { isFav ? '😍' : '🤍'}
         </button>
       </div>
