@@ -37,12 +37,24 @@
 }
 
 .movie__info-box {
+  flex: 1 0 0;
   padding-top: 0.5rem;
+
+  &#{&}--favorites {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+  }
 }
 
 .movie__title {
   margin: 0 0 0.5rem;
   font-size: 1.25rem;
+
+  &#{&}--favorites {
+    margin: 0;
+  }
 }
 
 .movie__title-link {
@@ -60,6 +72,40 @@
   display: inline-block;
   margin-right: 1rem;
   color: vars.$c-medium;
+}
+
+.movie__fav-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.fav-toggle {
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0;
+  border: none;
+  background: vars.$c-bg-light;
+  font-size: 1.5rem;
+  fill: vars.$c-bg-light;
+  cursor: pointer;
+
+  &#{&}--toggled {
+    fill: vars.$c-heart;
+  }
+}
+
+.fav-toggle__heart {
+  width: 100%;
+  height: 100%;
+
+  text {
+    stroke: black;
+    stroke-width: 0.5px;
+    stroke-linejoin: miter;
+    object-position: center center;
+  }
 }
 
 .no-data-placeholder {

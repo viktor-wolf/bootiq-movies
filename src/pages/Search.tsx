@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 
 import { searchMovies } from '../state/moviesSlice';
-import { useAppDispatch } from '../state/store';
+import { useAppDispatch, useAppSelector } from '../state/store';
 
-import SearchPagination from '../components/SearchPagination';
-import MovieList from '../components/SearchResults';
+import SearchPagination from '../components/Pagination';
+import MovieList from '../components/MovieList';
 
 const Search = () => {
   const dispatch = useAppDispatch();
+  const { movies } = useAppSelector(state => state.movies);
   const [searchQuery, setSearchQuery] = useState('');
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
@@ -44,7 +45,7 @@ const Search = () => {
           </button>
         </div>
       </form>
-      <MovieList />
+      <MovieList variant='search' movies={movies} />
       <SearchPagination />
     </>
   )
