@@ -1,7 +1,9 @@
 @use 'base';
+@use 'fav-toggle';
 @use 'header';
 @use 'main';
 @use 'movie-list';
+@use 'no-data-placeholder';
 @use 'pagination';
 @use 'search-form';
 @use 'typography';

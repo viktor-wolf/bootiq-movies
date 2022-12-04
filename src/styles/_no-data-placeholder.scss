@@ -1,0 +1,12 @@
+.no-data-placeholder {
+  width: 8rem;
+  margin: 0 auto 5rem;
+  text-align: center;
+  opacity: 0.2;
+}
+
+.no-data-placeholder__image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+}
