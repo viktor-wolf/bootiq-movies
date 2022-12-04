@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
 import { IMovie } from './shared-types';
@@ -12,10 +12,13 @@ const initialState: IFavsState = {
 };
 
 
-export const fetchFavs = createAsyncThunk<any, void, { state: RootState }>('favs/fetch-favorites', async (arg, { getState }) => {
+export const fetchFavs = createAsyncThunk<any, void, { state: RootState }>('favs/fetch-favorites', async () => {
   const dataString = localStorage.getItem('favs');
 
-  if (!dataString) return;
+  if (!dataString) {
+    localStorage.setItem('favs', '');
+    return [];
+  }
 
   const favIds = JSON.parse(dataString);
   const requests = favIds.map((id: string) => {
@@ -26,19 +29,20 @@ export const fetchFavs = createAsyncThunk<any, void, { state: RootState }>('favs
     .then(responses => Promise.all(responses.map(res => res.json())));
 });
 
-// export const toggleFav = () => {
-//   const favIndex = state.favs.findIndex(fav => fav === action.payload);
-//       const movieIndex = state.movies.findIndex(mov => mov.imdbID === action.payload);
-//       if (favIndex > -1) {
-//         state.favs.splice(favIndex, 1);
-//         if (movieIndex > -1) {
-//           state.movies.splice(movieIndex, 1);
-//         } 
-//       } else {
-//         state.favs.push(action.payload);
-//       }
-//       localStorage.setItem('favs', JSON.stringify(state.favs));
-// }
+export const toggleFav = createAsyncThunk<any, string, { state: RootState }>('favs/toggle-fav', async (toggledId, { getState }) => {
+  const { favs } = getState().favs;
+  const favIndex = favs.findIndex(fav => fav.imdbID === toggledId);
+
+  // TODO: Figure out how to return a favs array instead of those tuples
+  if (favIndex > -1) {
+    return ['splice', favIndex];
+  } else {
+    const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&i=${encodeURIComponent(toggledId)}&type=movie`);
+    const data = await response.json();
+    const movie: IMovie = (({ Poster, Title, Type, Year, imdbID }) => ({ Poster, Title, Type, Year, imdbID }))(data);
+    return ['push', movie];
+  }
+});
 
 export const favsSlice = createSlice({
   name: 'favs',
@@ -47,8 +51,15 @@ export const favsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchFavs.fulfilled, (state, action) => {
-        console.log(action);
-      });
+        state.favs = action.payload;
+      })
+      .addCase(toggleFav.fulfilled, (state, action) => {
+        if (action.payload[0] === 'splice') {
+          state.favs.splice(action.payload[1], 1);
+        } else {
+          state.favs.push(action.payload[1]);
+        }
+      })
   }
 });
 

@@ -1,29 +1,26 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { useAppDispatch } from './state/store';
+import { fetchFavs } from './state/favsSlice';
 
 import './styles/styles.scss';
 
-// import Favorites from './pages/Favorites';
+import Favorites from './pages/Favorites';
 import Movie from './pages/Movie';
 import Search from './pages/Search';
 
 import Header from './components/Header';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  useEffect(() => {dispatch(fetchFavs())}, [dispatch]);
   
-  // useEffect(() => {
-  //   dispatch(getStoredFavorites());
-  // }, [dispatch]);
-
   return (
     <>
       <Header />
       <main className="main">
         <Routes>
-          {/* <Route path="/my-favorites" element={<Favorites />} /> */}
+          <Route path="/my-favorites" element={<Favorites />} />
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/" element={<Search />} />
         </Routes>

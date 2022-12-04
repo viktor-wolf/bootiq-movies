@@ -1,18 +1,14 @@
-import { useEffect } from 'react';
-
-import { fetchFavs } from '../state/favsSlice';
-import { useAppDispatch } from '../state/store';
-
-import MovieList from '../components/SearchResults';
+import { useAppSelector } from '../state/store';
 
 const Favorites = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {dispatch(fetchFavs())}, [dispatch]);
+  const { favs } = useAppSelector(state => state.favs);
 
   return (
     <>
       <h1 className="page-title">Favorites</h1>
-      <MovieList />
+      {
+        favs.map((f,k) => (<div key={k}>{f.Title}</div>))
+      }
     </>
   )
 }

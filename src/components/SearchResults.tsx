@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { IMovie } from '../state/shared-types';
+import { toggleFav } from '../state/favsSlice';
 
 const NoDataPlaceholder = () => (
   <div className="no-data-placeholder">
@@ -14,6 +15,8 @@ const NoDataPlaceholder = () => (
 
 const Movie = ({ data }: { data: IMovie }) => {
   const dispatch = useAppDispatch();
+  const { favs } = useAppSelector(state => state.favs);
+  const isFav = favs.find(fav => fav.imdbID === data.imdbID);
   
   return (
     <li className="movie">
@@ -33,6 +36,11 @@ const Movie = ({ data }: { data: IMovie }) => {
             {data.Year}
           </li>
         </ul>
+      </div>
+      <div className="movie__fav-box">
+        <button onClick={() => dispatch(toggleFav(data.imdbID))}>
+          { isFav ? '😍' : '🤍'}
+        </button>
       </div>
     </li>
   )
