@@ -18,7 +18,7 @@
   padding-bottom: 0.75rem;
 
   &:not(:last-child) {
-    border-bottom: 1px solid vars.$c-faint;
+    border-bottom: 1px solid vars.$cFaint;
     margin-bottom: 1.25rem;
   }
 }
@@ -59,7 +59,7 @@
 
 .movie__title-link {
   text-decoration: none;
-  color: vars.$c-dark;
+  color: vars.$cDark;
 }
 
 .movie-metadata {
@@ -71,14 +71,14 @@
 .movie-metadata-item {
   display: inline-block;
   margin-right: 1rem;
-  color: vars.$c-medium;
+  color: vars.$cMedium;
 }
 
 .movie__fav-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 0 0 auto;
+  flex: 0 0 3rem;
 }
 
 .fav-toggle {
@@ -86,13 +86,13 @@
   width: 1.5rem;
   padding: 0;
   border: none;
-  background: vars.$c-bg-light;
+  background: vars.$bgLight;
   font-size: 1.5rem;
-  fill: vars.$c-bg-light;
+  fill: vars.$bgLight;
   cursor: pointer;
 
   &#{&}--toggled {
-    fill: vars.$c-heart;
+    fill: vars.$cHeart;
   }
 }
 

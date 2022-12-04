@@ -5,8 +5,8 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background: vars.$c-bg-light;
-  border: 1px solid vars.$c-faint;
+  background: vars.$bgLight;
+  border: 1px solid vars.$cFaint;
   cursor: pointer;
   transition: border-color 300ms;
 
@@ -15,13 +15,13 @@
   }
 
   &:not(:disabled):hover {
-    border-color: vars.$c-highlight;
+    border-color: vars.$cHighlight;
     transition: padding 0ms;
   }
 }
 
 %button--active {
-  color: vars.$c-highlight;
+  color: vars.$cHighlight;
   font-weight: 700;
-  border: 2px solid vars.$c-highlight;
+  border: 2px solid vars.$cHighlight;
 }

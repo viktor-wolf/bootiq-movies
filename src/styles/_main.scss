@@ -1,5 +1,12 @@
+@use 'mixins';
+
 .main {
-  width: 48rem;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+
+  @include mixins.miw(60rem) {
+    max-width: 60rem;
+  }
 }

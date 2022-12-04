@@ -18,12 +18,12 @@
 .search-input {
   flex: 1 0 0px;
   padding: 0 0.5rem;
-  border: 1px solid vars.$c-faint;
+  border: 1px solid vars.$cFaint;
   border-right-width: 0;
   border-radius: 0;
 
   &:focus {
-    outline-color: vars.$c-highlight;
+    outline-color: vars.$cHighlight;
   }
 }
 

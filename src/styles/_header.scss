@@ -1,15 +1,28 @@
+@use 'mixins';
 @use 'vars';
 
 .header {
   position: sticky;
   top: 0;
-  padding: 0 2rem;
-  background: vars.$c-bg-light;
+  padding: 0 1rem;
+  background: vars.$bgLight;
+  border-bottom: 1px solid vars.$cFaint;
+
+  @include mixins.miw(60rem) {
+    border: none;
+  }
 }
 
 .header-nav {
-  border-bottom: 1px solid vars.$c-faint;
   padding: 1rem 0;
+  
+  @include mixins.miw(60rem) {
+    border-bottom: 1px solid vars.$cFaint;
+  }
+
+  @include mixins.miw(62rem) {
+    padding: 1rem;
+  }
 }
 
 .nav-list {
@@ -24,7 +37,7 @@
 }
 
 .nav-item__link {
-  color: vars.$c-dark;
+  color: vars.$cDark;
   font-size: 1.125rem;
   font-weight: 700;
   text-decoration: none;
