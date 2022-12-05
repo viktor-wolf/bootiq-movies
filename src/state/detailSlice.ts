@@ -17,7 +17,6 @@ interface IDetailBase {
   Plot: string,
   Production: string,
   Rated: string,
-  Ratings: { Source: string, Value: string}[],
   Released: string,
   Runtime: string,
   Type: string,
@@ -27,6 +26,7 @@ interface IDetailBase {
 
 interface IDetailForeign extends IDetailBase {
   BoxOffice: string,
+  Ratings: { Source: string, Value: string }[],
   imdbID: string,
   imdbRating: string,
   imdbVotes: string,
@@ -34,6 +34,7 @@ interface IDetailForeign extends IDetailBase {
 }
 
 export interface IDetailLocal extends IDetailBase {
+  Ratings: string[],
   'Box Office': string,
   'IMDB ID': string,
   'IMDB Rating': string,
@@ -48,9 +49,10 @@ const initialState: IDetailState = {
   detail: null
 };
 
-const detailForeignToDetailLocal = ({ BoxOffice, imdbID, imdbRating, imdbVotes, ...rest }: IDetailForeign) => {
+const detailForeignToDetailLocal = ({ BoxOffice, Ratings, imdbID, imdbRating, imdbVotes, ...rest }: IDetailForeign) => {
   return { 
-    'Box Office': BoxOffice, 
+    'Box Office': BoxOffice,
+    Ratings: Ratings.map(r => `${r.Source}: ${r.Value}`),
     'IMDB ID': imdbID,
     'IMDB Rating': imdbRating,
     'IMDB Votes': imdbVotes,
@@ -69,7 +71,7 @@ export const detailLocalToMovie = ({ Poster, Title, Type, Year, 'IMDB ID': imdbI
 } 
 
 export const fetchDetail = createAsyncThunk<any, string, { state: RootState }>('detail/fetch-detail', async (id) => {
-  const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&i=${encodeURIComponent(id)}`);
+  const response = await fetch(`http://www.omdbapi.com/?apikey=${encodeURIComponent(process.env.REACT_APP_API_KEY as string)}&i=${encodeURIComponent(id)}&plot=full`);
   return response.json();
 });
 

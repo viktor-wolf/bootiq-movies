@@ -1,5 +1,5 @@
 @mixin maw($bp) {
-  @media screen and (max-width: ($bp - 0.02px)) {
+  @media screen and (max-width: ($bp - 0.02rem)) {
     @content;
   }
 }
